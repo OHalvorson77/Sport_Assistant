@@ -1,4 +1,4 @@
-# 🏃‍♂️ SportsMotionApp
+#🏃‍♂️ SportsMotionApp
 
 **SportsMotionApp** is a real-time body movement tracking iOS app built in Swift using Vision and AVFoundation. It uses the device camera to detect body joints and provides **live spoken feedback** based on your motion — perfect for athletic training, workout correction, or form analysis in sports like tennis, basketball, golf, and more.
 
