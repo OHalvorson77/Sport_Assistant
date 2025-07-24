@@ -25,27 +25,14 @@
 git clone https://github.com/yourusername/SportsMotionApp.git
 cd SportsMotionApp
 2. Open the project in Xcode
-bash
-Copy
-Edit
+
 open SportsMotionApp.xcodeproj
+
 3. Build and run on a real device
 Pose detection requires camera access and will not work in the iOS simulator.
 
-🔐 Permissions
-Ensure the following permissions are included in your Info.plist:
-
-xml
-Copy
-Edit
-<key>NSCameraUsageDescription</key>
-<string>This app uses the camera to track your body movement for sports feedback.</string>
-<key>NSSpeechRecognitionUsageDescription</key>
-<string>This app provides audio feedback based on your movement.</string>
 🧩 Project Structure
-graphql
-Copy
-Edit
+
 SportsMotionApp/
 ├── CameraManager.swift          # Handles camera input (AVFoundation)
 ├── PoseAnalyzer.swift           # Runs Vision pose detection
@@ -55,7 +42,9 @@ SportsMotionApp/
 ├── ContentView.swift            # Main SwiftUI layout (ZStack camera + overlay)
 ├── Assets.xcassets              # Assets and icon
 └── Info.plist                   # Permission strings
+
 🎮 How It Works
+
 CameraManager initializes the camera and sends live video frames.
 
 PoseAnalyzer processes each frame with Vision to detect body joints.
