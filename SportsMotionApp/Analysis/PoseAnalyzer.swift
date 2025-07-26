@@ -6,7 +6,7 @@ class PoseAnalyzer {
 
     var onPoseDetected: (([VNHumanBodyPoseObservation.JointName: CGPoint]) -> Void)?
 
-    func process(sampleBuffer: CMSampleBuffer) {
+    func process(sampleBuffer: CMSampleBuffer, in size: CGSize) {
         guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
 
         let request = VNDetectHumanBodyPoseRequest()
@@ -20,15 +20,21 @@ class PoseAnalyzer {
 
             var displayPoints: [VNHumanBodyPoseObservation.JointName: CGPoint] = [:]
 
-            if let wrist = recognizedPoints[.rightWrist], wrist.confidence > 0.3 {
-                displayPoints[.rightWrist] = wrist.location
+            for (jointName, point) in recognizedPoints {
+                guard point.confidence > 0.3 else { continue }
+
+                let convertedPoint = CGPoint(
+                    x: point.location.x * size.width,
+                    y: (1 - point.location.y) * size.height // flip Y-axis
+                )
+                displayPoints[jointName] = convertedPoint
             }
 
-            // Call the callback on the main thread
             DispatchQueue.main.async {
-                print("Sending points to overlay: \(displayPoints)")
                 self.onPoseDetected?(displayPoints)
+                FeedbackManager.shared.process(joints: displayPoints)
             }
         }
     }
+
 }
